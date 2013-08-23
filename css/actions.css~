@@ -1,0 +1,34 @@
+button.btn {
+	display: block;
+	vertical-align: middle;
+	margin: 10px auto 5px;
+}
+
+div.controls {
+	display: block;
+}
+
+input.span3 {
+	display: block;
+	margin: 3px auto;
+}
+
+select.span3 {
+	display: block;
+	margin: 3px auto;
+}
+
+select.create, input.create, input.orders {
+	display: block;
+}
+
+.response {
+	width: 38%;
+	margin: auto;
+	text-align: left;
+}
+
+.transaction:not(:last-child) {
+	border-bottom: 1px solid #C2C2C2;
+	padding: 3px;
+}

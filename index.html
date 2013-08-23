@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset=utf-8 />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>OANDA API</title>
+	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="css/main.css" />
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript" src="http://code.jquery.com/color/jquery.color-2.1.2.min.js"></script>
+	<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/oanda.js"></script>
+	<script src="https://www.google.com/jsapi"></script>
+	<script src="js/OCandlestickChart.js"></script>
+	<script>
+        google.load("visualization", "1.1", {packages:["corechart, controls"]});
+        OANDA.baseURL = "http://api-sandbox.oanda.com";
+    </script>
+    <!--[if IE]>
+                <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+<body>
+	<div class="navbar navbar-fixed-top oanda-nav">
+		<div class="navbar-inner">
+			<div class="container-fluid">
+				<a class="brand oanda-brand" href="#">OANDA API</a>
+				<div class="nav-collapse collapse">
+				</div>
+			</div>
+		</div>
+	</div>	
+	<div class="container-fluid">
+	    <div class="row-fluid">
+	        <div id="leftSide" class="span3">                
+                <div id="account">
+                    <form id="createAccountForm" onSubmit="createAccount(this);return false;">
+                        <input type="text" id="currencyInput" class="span3 oa-full-width" name="currency" placeholder="USD" />
+                        <input type="submit" id="createAccountBtn" class="span9 btn oa-full-width" value="Create and Use Account" />
+                    </form>
+                    <table id="accountSummary" class="table table-striped table-condensed">
+                        <thead>
+                            <tr>
+                                <th id="accountName"></th>
+                                <th id="accountCurrency"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Balance:</td>
+                                <td id="balance"></td>
+                            </tr>
+                            <tr>
+                                <td>Unrealized P&L:</td>
+                                <td id="unrealizedPl"></td>
+                            </tr>
+                            <tr>
+                                <td>Realized P&L:</td>
+                                <td id="realizedPl"></td>
+                            </tr>
+                            <tr>
+                                <td>Open Trades:</td>
+                                <td id="openTrades"></td>
+                            </tr>
+                            <tr>
+                                <td>Open Orders:</td>
+                                <td id="openOrders"></td>
+                            </tr>
+                            <tr>
+                                <td>Margin Used:</td>
+                                <td id="marginUsed"></td>
+                            </tr>
+                            <tr>
+                                <td>Margin Available:</td>
+                                <td id="marginAvail"></td>
+                            </tr>
+                            <tr>
+                                <td>Margin Rate:</td>
+                                <td id="marginRate"></td>
+                            </tr>
+                            <tr>
+                                <td>Account Number:</td>
+                                <td id="accountId"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>                
+                <div id="createTrade" class="oa-container">
+                    <form id="tradeForm" onSubmit="tradeAction(this);return false;">
+                        <input type="hidden" id="txType" name="transaction_type" value="trade" />
+                        <div id="transactionType" class="btn-group">
+                            <div class="btn txType btn-info active">Trade</div>
+                            <div class="btn txType">Order</div>
+                        </div>                    
+                        <select id="pairSelector" name="instrument"></select>
+                        <input type="hidden" name="side">
+                        <div class="btn-group" id="transactionSide">
+                            <div class="btn">Sell</div>
+                            <div class="btn">Buy</div>
+                        </div>                        
+                        <select id="typeSelector" name="type" class="order-param">
+                            <option value="marketIfTouched">Market If Touched Order</option>
+                            <option value="limit">Limit Order</option>
+                            <option value="stop">Stop Order</option>
+                        </select>
+                        <div id="tradeFields">
+                            <div id="required">
+                                <div class="input-prepend">
+                                    <span class="add-on">Units</span>
+                                    <input type="text" name="units" />
+                                </div>
+                                <div class="input-prepend order-param">
+                                    <span class="add-on">Price</span>
+                                    <input type="text" name="price"" />
+                                </div>
+                                <div class="input-prepend order-param">
+                                    <span class="add-on">Expiry</span>
+                                    <input type="text" name="expiry" />
+                                </div>
+                            </div>                            
+                            <div id="optional">
+                                <div class="input-append">
+                                    <input type="text" name="takeProfit" />
+                                    <span class="add-on">TP</span>
+                                </div>
+                                <div class="input-append">
+                                    <input type="text" name="stopLoss" />
+                                    <span class="add-on">SL</span>
+                                </div>
+                                <div class="input-append">
+                                    <input type="text" name="trailingStop" />
+                                    <span class="add-on">TS</span>
+                                </div>
+                                <div class="input-append order-param">
+                                    <input type="text" name="lowerBound" />
+                                    <span class="add-on">LB</span>
+                                </div>
+                                <div class="input-append order-param">
+                                    <input type="text" name="upperBound" />
+                                    <span class="add-on">UB</span>
+                                </div>
+                            </div>
+                        </div>                                
+                        <input type="submit" class="btn btn-primary form-action" value="Submit" />
+                        <input id="cancel" class="btn form-action" value="Cancel" />
+                    </form>
+                </div>
+	        </div>	        
+            <div id="rates" class="span4 oa-container">
+                <a href="#ratesModal" class="btn toggle">Select Pairs</a>
+                <div id="ratesModal" class="modalDialog">
+                    <div id="ratesSelector">
+                        <a id="close" href="#" title="Close" class="close">X</a>
+                        <select id="pairsNotSelected" multiple="multiple">
+                        </select>
+                        <div class="rates-selector-btn-container">
+                            <input type="button" class="btn rates-selector-btn" value="Add &gt;" onclick="addPair()" />
+                            <input type="button" class="btn rates-selector-btn" value="Add All &gt;&gt;" onclick="addAllPairs()" />
+                            <input type="button" class="btn rates-selector-btn" value="&lt; Remove" onclick="removePair()" />
+                            <input type="button" class="btn rates-selector-btn" value="&lt;&lt; Remove All" onclick="removeAllPairs()" />
+                            <input type="submit" class="btn rates-selector-btn" value="Update" form="ratesForm" />
+                        </div>
+                        <form id="ratesForm" onSubmit="updateSelectedPairsList();return false;">
+                            <select id="pairsSelected" name="pairsSelected" multiple="multiple">
+                            </select>
+                        </form>
+                    </div>
+                </div>
+                <div id="ratesListContainer">
+                    <div id="ratesList">
+                        <div id="rateTemplate" class="pair-rate">
+                            <div class="instrument"></div>
+                            <div class="prices">
+                                <div class="ask"><div class="old-price"></div><small></small><bold></bold><sup></sup></div>
+                                <div class="bid"><div class="old-price"></div><small></small><bold></bold><sup></sup></div>
+                            </div>
+                        </div>
+                    </div>                
+                </div>
+            </div>            
+            <div class="span5">    
+                <div id="trades">
+                    <div id="txListContainer">        
+                        <input type="hidden" name="listType" value="trades" />
+                        <div id="listType" class="btn-group oa-full-width">
+                            <div id="listTrades" class="btn active">Trades</div>
+                            <div id="listOrders" class="btn">Orders</div>
+                            <div id="listPositions" class="btn">Positions</div>
+                            <div id="listTransactions" class="btn">Transactions</div>
+                        </div>
+                        <div id="templates">
+                            <div id="tradeTemplate" class="openTrade">
+                                <div class="openTxFields">
+                                    <div>
+                                        <span class="instrument"></span>
+                                        <span class="units"></span> units
+                                        <span class="oa-open-tx-actions">
+                                            <span class="profit"></span>
+                                            <i class="icon-remove"></i>
+                                            <input type="button" class="btn btn-primary btn-small" value="Save" onclick="modifyTrade($(this).closest('.openTrade'))" />
+                                            <input type="button" class="btn btn-small" value="Cancel" onclick="getTradeList()" />
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <span class="side"></span> @
+                                        <span class="price"></span>
+                                        TP: <span class="takeProfit"></span>
+                                        SL: <span class="stopLoss"></span>
+                                        TS: <span class="trailingStop"></span>
+                                    </div>
+                                </div>
+                            </div>                
+                            <div id="orderTemplate" class="openOrder">
+                                <div class="openTxFields">
+                                    <div>
+                                        <span class="instrument"></span>
+                                        <span class="units"></span> units -                            
+                                        expires at <span class="expiry"></span>
+                                        <span class="oa-open-tx-actions">
+                                            <span class="distance"></span>
+                                            <i class="icon-remove"></i>
+                                            <input type="button" class="btn btn-primary btn-small" value="Save" onclick="modifyOrder($(this).closest('.openOrder'))" />
+                                            <input type="button" class="btn btn-small" value="Cancel" onclick="getOrderList()" />                                
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <span class="side"></span> <span class="type"></span> @
+                                        <span class="price"></span>
+                                        TP: <span class="takeProfit"></span>
+                                        SL: <span class="stopLoss"></span>
+                                        TS: <span class="trailingStop"></span>
+                                        UB: <span class="upperBound"></span>
+                                        LB: <span class="lowerBound"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="positionTemplate" class="openPosition">
+                                <div class="openTxFields">
+                                    <div>
+                                        <span class="instrument"></span>
+                                        <span class="units"></span> units
+                                        <span class="oa-open-tx-actions">
+                                            <span class="profit"></span>
+                                            <i class="icon-remove"></i>
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <span class="side"></span> @
+                                        <span class="avgPrice"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="transactionTemplate" class="openTransaction">
+                                <!-- Need to create a template for transactions -->
+                                Not yet implemented.
+                            </div>
+                        </div>
+                        <div id="txList">
+                            <!-- Trades/Orders/Positions/Transactions List will be displayed here -->
+                        </div>
+                    </div>  
+                </div>
+                <div id="candles">
+                    <select id="chartInstrumentSelector"></select>
+                    <div id="error">
+                        <!-- Error messages will be displayed here -->
+                    </div>
+                    <div id="chart">
+                        <!-- Candlestick chart will be displayed here -->
+                    </div>
+                    <div id="control">
+                        <!-- Line chart control will be dispalyed here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="js/base.js"></script>
+</html>

@@ -1,0 +1,381 @@
+@media (min-width: 980px) {
+    body {
+        padding-top: 60px;
+        overflow-y: scroll;
+    }
+}
+
+@media (max-width: 1484px) {
+    #ratesList .pair-rate {
+        width: 90% !important;
+    }
+}
+
+.oa-full-width {
+    width: 100%;
+}
+
+.oa-container {
+    text-align: center;
+}
+
+.hidden.noBlock {
+    display: none;
+}
+
+#leftSide {
+    min-width: 250px;
+}
+
+#createAccountForm, #useAccount {
+    margin: 0px 0px 5px;
+}
+
+#currencyInput {
+    margin: 0px;
+}
+
+#createAccountBtn {
+    display: inline-block;
+    margin: 0px;
+    float: right;
+}
+
+#accountSummary {
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+}
+
+#createTrade {
+    border: 1px solid #ccc;
+}
+
+#tradeForm {
+    width: 100%;
+    margin: auto;
+    padding: 0px 0px 10px 0px;
+}
+
+#transactionType {
+    display: block;
+    width: 100%;
+    margin: 0px 0px 10px 0px;
+}
+
+#transactionType div:first-child {
+    border-left: none;
+    border-right: 1px;
+}
+
+#transactionType div {
+    border-radius: 0px;
+    border-top: none;
+    padding: 4px 0px;
+}
+
+#pairSelector {
+    width: 110px;
+    margin: auto;
+}
+
+#transactionSide {
+    display: block;
+    width: 220px;
+    margin: 10px auto;
+}
+
+#transactionSide div {
+    width: 84px;
+}
+
+#typeSelector {
+    display: block;
+    margin: 10px auto 0px;
+}
+
+#typeSelector.hidden {
+    display: none;
+}
+
+#tradeFields {
+    display: block;
+    width: 280px;
+    margin: 10px auto 0px;
+}
+
+#required {
+    display: inline-block;
+    width: 120px;
+    vertical-align: text-top;
+}
+
+#required .add-on {
+    width: 35px;
+}
+
+#required input {
+    width: 55px;
+}
+
+#optional {
+    display: inline-block;
+    width: 120px;
+    vertical-align: text-top;
+}
+
+#optional input {
+    width: 70px;
+}
+
+#tradeForm .form-action {
+    width: 70px;
+    padding: 5px;
+}
+
+#tradeForm #cancel{
+    display: none;
+    width: 58px;
+}
+
+#txListContainer {
+    border: 1px solid #ccc;
+}
+
+#txList {
+    height: 300px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    background-color: #eee;
+}
+
+#txListContainer .btn-group .btn:first-child {
+    margin-right: 1px;
+    border-right: 1px solid #ccc;
+}
+
+#txListContainer .btn-group .btn {
+    padding: 2px 0px;
+    border-radius: 0px;
+    border: none;
+    border-right: 2px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+
+#txListContainer .btn-group .btn:last-child {
+    border-right: none;
+}
+
+#templates {
+    display: none;
+}
+
+#txList .openTrade, #txList .openOrder, #txList .openPosition, #txList .openTransaction {
+    padding: 5px;
+    font-size: 14px;
+    color: #676767;
+    border-bottom: 1px solid #ddd;
+    background-color: #fff;
+}
+
+#txList .instrument {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+#txList .instrument, #txList .price, #txList .expiry, #txList .takeProfit, #txList .stopLoss, #txList .trailingStop, #txList .upperBound, {
+    margin-right: 8px;
+}
+
+#txList .units, #txList .expiry, #txList .takeProfit, #txList .stopLoss, #txList .trailingStop, #txList .upperBound, #txList .lowerBound {
+    color: #bcbcbc;
+}
+
+#txList input.units, #txList input.price, #txList input.expiry, #txList input.takeProfit, #txList input.stopLoss, #txList input.trailingStop, #txList input.upperBound, #txList input.lowerBound {
+    width: 70px;
+    margin-bottom: 0px;
+    height: 12px;
+}
+
+#txList input.expiry {
+    width: 150px;
+}
+
+#txList .changed {
+    color: rgb(0,200,200);
+    font-weight: bold
+    font-style: italic;
+}
+
+#txList .oa-open-tx-actions {
+    float: right;
+    opacity: 0.65;
+}
+
+#txList .oa-open-tx-actions input {
+    display: none;
+    height: 21px;
+    margin-top: -3px;
+    padding: 0px 8px;
+}
+
+#rates form {
+    margin: 0px;
+}
+
+#focusSelector {
+    margin: 0px;
+}
+
+#rates .modalDialog {
+	position: fixed;
+	font-family: Arial, Helvetica, sans-serif;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background: rgba(0,0,0,0.8);
+	z-index: 99999;
+	opacity:0;
+	-webkit-transition: opacity 200ms ease-in;
+	-moz-transition: opacity 200ms ease-in;
+	transition: opacity 200ms ease-in;
+	pointer-events: none;
+}
+
+#rates .modalDialog:target {
+	opacity: 1;
+	pointer-events: auto;
+}
+
+#rates .modalDialog > #ratesSelector {
+	position: relative;
+	margin: 10% auto;
+	border-radius: 10px;
+	padding: 10px;
+	background: #fff;
+	background: -moz-linear-gradient(#fff, #ddd);
+	background: -webkit-linear-gradient(#fff, #ddd);
+	background: -o-linear-gradient(#fff, #ddd);
+}
+
+#rates .close {
+	background: #606061;
+	color: #FFFFFF;
+	line-height: 25px;
+	position: absolute;
+	right: -9px;
+	text-align: center;
+	top: -9px;
+	width: 24px;
+	text-decoration: none;
+	font-weight: bold;
+	border: 2px solid white;
+	-webkit-border-radius: 12px;
+	-moz-border-radius: 12px;
+	border-radius: 15px;
+	-moz-box-shadow: 1px 1px 3px #000;
+	-webkit-box-shadow: 1px 1px 3px #000;
+	box-shadow: 1px 1px 3px #000;
+	opacity: 1;
+}
+
+#rates .close:hover { 
+    background: #00d9ff; 
+    opacity: 1;
+}
+
+#rates #ratesSelector {
+    width: 50%;
+}
+
+#rates #ratesListContainer {
+    margin: 5px 0px;    
+    border: 1px solid #ccc;
+    max-height: 584px;
+    overflow-y: scroll;
+}
+
+#rates #pairsNotSelected, #rates #pairsSelected {
+    width: 160px;
+    height: 300px;
+    margin: 0px;
+}
+
+#rates .rates-selector-btn-container {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+#rates .rates-selector-btn {
+    display: block;
+    width: 120px;
+    margin: 5px 5px 0px;
+}
+
+#rates #ratesForm {
+    display: inline-block;
+}
+
+#ratesList #rateTemplate {
+    display: none;
+}
+
+#ratesList .pair-rate {
+    display: inline-block;
+    width: 45%;
+    min-width: 164px;
+    margin: 4px;
+    border: 1px solid #ddd;
+    padding: 6px;
+    text-align: left;
+}
+
+#ratesList .instrument {
+    display: inline-block;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+#ratesList .prices {
+    display: inline-block;
+    float: right;
+}
+
+#ratesList .ask {
+    display: inline-block;
+    margin-right: 5px;
+}
+
+#ratesList .bid {
+    display: inline-block;
+}
+
+#ratesList .old-price {
+    display: none;
+}
+
+#ratesList small {
+    font-size: 11px;
+}
+
+#ratesList bold {
+    font-size: 20px;
+    margin: 0px 2px;
+    font-weight: bold;
+}
+
+.ask div {
+    font-size: 10px;
+}
+
+#candles {
+    margin-top: 10px;
+}
+
+#candles #chart {
+    height: 283px;
+}
+
+#candles div#control {
+   display: none;
+}
